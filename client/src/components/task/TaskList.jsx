@@ -1,29 +1,37 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import TaskCard from './TaskCard.jsx'
+import axios from 'axios'
 
 const TaskList = () => {
 
     // eslint-disable-next-line no-unused-vars
     const [task, setTask] = useState([
         {
-            key : 1,
-            name : "adam",
+            key : "",
+            name : "",
+            description : "",
             finish : false,
-            description : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis magni labore tempora debitis, praesentium architecto repellat aut ab voluptas soluta exercitationem vero, id ipsa incidunt dolorum dignissimos nihil tenetur. Dolorum?",
-            footer : "Father",
-        },
-        {
-            key : 2,
-            name : "Eve",
-            finish : true,
-            description : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis magni labore tempora debitis, praesentium architecto repellat aut ab voluptas soluta exercitationem vero, id ipsa incidunt dolorum dignissimos nihil tenetur. Dolorum?",
-            footer : "Mother",
+            deadline : "",
         },
     ])
 
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const response = await axios.get("http://localhost:3000/api/task-get");
+                setTask(response.data);
+                console.log(task)
+            } catch (error) {
+                console.error("Error fetching tasks:", error.message);
+            }
+        };
+    
+        fetchTasks();
+    }, []);
+
   return (
-    <div className='grid gap-4'>
+    <div className='flex column gap-4'>
         {task.map((task)=>(
             <TaskCard key={task.key} {...task}/>
         ))}
