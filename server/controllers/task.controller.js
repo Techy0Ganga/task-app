@@ -28,6 +28,16 @@ async function taskAdd(req, res) {
     }
 }
 
-export { taskAdd };
+async function taskFetch (req, res){
+    try{
+        const data = await taskModel.findAll();
+        res.status(201).json(data);
+    }catch(error){
+        console.error(error);
+        return res.status(500).json({message : "something wrong", details : error.message})
+    }
+}
+
+export { taskAdd, taskFetch };
 
 

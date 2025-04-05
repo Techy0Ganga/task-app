@@ -1,12 +1,10 @@
 import express from 'express';
 import { Router } from 'express';
-import { taskAdd } from '../controllers/task.controller.js';
+import { taskAdd, taskFetch } from '../controllers/task.controller.js';
 
 const router = Router();
 
-router.get('/task-get', (req, res) => {
-
-})
+router.get('/task-get', taskFetch)
 
 router.post('/task-add', taskAdd)
 
